@@ -20,7 +20,27 @@ Rails.application.routes.draw do
     resources :categories, except: [:edit, :update, :show]
   end
 
-  # The priority is based upon order of creation: first created -> highest priority.
+  resource :sessions, only: [:new] do
+    get '/signup' => 'users#new'
+    post '/users' => 'users#create'
+  end
+
+  resource :users, only: [:new] do
+
+    root to: 'gif#cool'
+  
+    get '/login' => 'sessions#new'
+    post '/login' => 'sessions#create'
+    get '/logout' => 'sessions#destroy'
+  
+    get '/signup' => 'users#new'
+    post '/users' => 'users#create'
+    
+  end
+
+end
+
+# The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
@@ -74,4 +94,3 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
