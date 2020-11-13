@@ -20,24 +20,16 @@ Rails.application.routes.draw do
     resources :categories, except: [:edit, :update, :show]
   end
 
-  resource :sessions, only: [:new] do
-    get '/signup' => 'users#new'
-    post '/users' => 'users#create'
-  end
-
-  resource :users, only: [:new] do
-
-    root to: 'gif#cool'
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
   
-    get '/login' => 'sessions#new'
-    post '/login' => 'sessions#create'
-    get '/logout' => 'sessions#destroy'
-  
-    get '/signup' => 'users#new'
-    post '/users' => 'users#create'
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
+
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
     
-  end
-
 end
 
 # The priority is based upon order of creation: first created -> highest priority.
