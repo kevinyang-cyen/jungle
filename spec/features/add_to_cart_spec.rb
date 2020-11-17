@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Visitor navigates to product details page", type: :feature, js: true do
+RSpec.feature "Visitor adds to cart and sees the cart button in nav change", type: :feature, js: true do
 
   # SETUP
   before :each do
@@ -20,11 +20,12 @@ RSpec.feature "Visitor navigates to product details page", type: :feature, js: t
   scenario "They see all products" do
     # ACT
     visit root_path
-
-    # hover over the first product and click add
-    first("article.product").find_link('Details »').click
     
-    expect(page).to have_content "Name"
+    expect(page).to have_content "My Cart (0)"
+    save_screenshot
+
+    first("article.product").find_button('Add').click
+    expect(page).to have_content "My Cart (1)"
 
     # DEBUG / VERIFY
     # save_screenshot
