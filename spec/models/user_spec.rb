@@ -9,8 +9,8 @@ RSpec.describe User, type: :model do
         first_name: 'first',
         last_name: 'last',
         email: 'firstlast@gmail.com',
-        password: '12345',
-        password_confirmation: '12345'
+        password: '123456',
+        password_confirmation: '123456'
       })
       expect(user1.errors.full_messages).to eq([])
     end
@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
         first_name: 'first',
         last_name: 'last',
         email: 'firstlast@gmail.com',
-        password: '12345',
+        password: '123456',
         password_confirmation: '12346'
       })
       expect(user2.errors.full_messages).to include("Password confirmation doesn't match Password")
@@ -42,7 +42,7 @@ RSpec.describe User, type: :model do
         first_name: 'first',
         last_name: 'last',
         email: 'firstlast@gmail.com',
-        password: '12345',
+        password: '123456',
         password_confirmation: ""
       })
       expect(user4.errors.full_messages).to include("Password confirmation doesn't match Password")
@@ -53,15 +53,15 @@ RSpec.describe User, type: :model do
         first_name: 'first',
         last_name: 'last',
         email: 'firstlast@gmail.com',
-        password: '12345',
-        password_confirmation: "12345"
+        password: '123456',
+        password_confirmation: "123456"
       })
       user6 = User.create({
         first_name: 'first',
         last_name: 'last',
         email: 'FIRstlast@gmail.com',
-        password: '12345',
-        password_confirmation: "12345"
+        password: '123456',
+        password_confirmation: "123456"
       })
       expect(user6.errors.full_messages).to include("Email has already been taken")
     end
@@ -71,33 +71,82 @@ RSpec.describe User, type: :model do
         first_name: 'first',
         last_name: 'last',
         email: nil,
-        password: '12345',
-        password_confirmation: '12345'
+        password: '123456',
+        password_confirmation: '123456'
       })
       expect(user7.errors.full_messages).to include("Email can't be blank")
     end
 
     it "checks that first name exists" do
-      user7 = User.create({
+      user8 = User.create({
         first_name: nil,
         last_name: 'last',
         email: 'firstlast@gmail.com',
-        password: '12345',
-        password_confirmation: '12345'
+        password: '123456',
+        password_confirmation: '123456'
       })
-      expect(user7.errors.full_messages).to include("First name can't be blank")
+      expect(user8.errors.full_messages).to include("First name can't be blank")
     end
 
     it "checks that last name exists" do
-      user7 = User.create({
+      user9 = User.create({
         first_name: 'first',
         last_name: nil,
         email: 'firstlast@gmail.com',
-        password: '12345',
-        password_confirmation: '12345'
+        password: '123456',
+        password_confirmation: '123456'
       })
-      expect(user7.errors.full_messages).to include("Last name can't be blank")
+      expect(user9.errors.full_messages).to include("Last name can't be blank")
     end
 
+    it "checks minimum length of password" do
+      user10 = User.create({
+        first_name: 'first',
+        last_name: 'last',
+        email: 'firstlast@gmail.com',
+        password: '12',
+        password_confirmation: '12'
+      })
+      expect(user10.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+    end
+
+  end
+
+  describe '.authenticate_with_credentials' do
+    it "authenticates correctly" do
+      user1 = User.create({
+        first_name: 'first',
+        last_name: 'last',
+        email: 'firstlast@gmail.com',
+        password: '123456',
+        password_confirmation: '123456'
+      })
+      expect(user1.authenticate_with_credentials(user1.email, user1.password)).to be true
+      expect(user1.authenticate_with_credentials(user1.email, 'abcdef')).to be false
+    end
+  end
+
+  describe 'authentication edge cases' do
+    it "authenticates correctly even when there are extra spaces around emails" do
+      user1 = User.create({
+        first_name: 'first',
+        last_name: 'last',
+        email: 'firstlast@gmail.com',
+        password: '123456',
+        password_confirmation: '123456'
+      })
+      expect(user1.authenticate_with_credentials('   firstlast@gmail.com  ', user1.password)).to be true    
+    end
+
+    it "authenticates correctly even when email is not cased correctly" do
+      user1 = User.create({
+        first_name: 'first',
+        last_name: 'last',
+        email: 'firstlAst@GMail.com',
+        password: '123456',
+        password_confirmation: '123456'
+      })
+      expect(user1.authenticate_with_credentials('fIRstlast@gmaIL.com', user1.password)).to be true    
+    end
   end
 end
