@@ -28,6 +28,7 @@ scenario "They see all products" do
 
   # DEBUG / VERIFY
   # save_screenshot
+  # puts page.html
 end
 
 end
