@@ -15,10 +15,7 @@ RSpec.describe Product, type: :model do
         quantity: 10,
         price: 64.99
       })
-      expect(prod1.name).to eq('Men\'s Classy shirt')
-      expect(prod1.price).to eq(64.99)
-      expect(prod1.quantity).to eq(10)
-      expect(prod1.category_id).to eq(cat1.id)
+      expect(prod1.errors.full_messages).to eq([])
     end
 
     it "checks if name is entered" do
