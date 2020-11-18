@@ -4,6 +4,9 @@ A mini e-commerce application built with Rails 4.2 for purposes of teaching Rail
 
 
 ## Screenshots
+!["Default products page"](https://github.com/kevinyang-cyen/jungle-rails/blob/master/docs/Jungle1.PNG?raw=true)
+!["My Cart"](https://github.com/kevinyang-cyen/jungle-rails/blob/master/docs/Jungle2.PNG?raw=true)
+!["Admin Privileges"](https://github.com/kevinyang-cyen/jungle-rails/blob/master/docs/Jungle3.PNG?raw=true)
 
 ## Setup
 
