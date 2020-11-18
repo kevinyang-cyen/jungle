@@ -121,8 +121,8 @@ RSpec.describe User, type: :model do
         password: '123456',
         password_confirmation: '123456'
       })
-      expect(user1.authenticate_with_credentials(user1.email, user1.password)).to be true
-      expect(user1.authenticate_with_credentials(user1.email, 'abcdef')).to be false
+      expect(User.authenticate_with_credentials(user1.email, user1.password)).to eq(user1) 
+      expect(User.authenticate_with_credentials(user1.email, 'abcdef')).to be false
     end
   end
 
@@ -135,7 +135,7 @@ RSpec.describe User, type: :model do
         password: '123456',
         password_confirmation: '123456'
       })
-      expect(user1.authenticate_with_credentials('   firstlast@gmail.com  ', user1.password)).to be true    
+      expect(User.authenticate_with_credentials('   firstlast@gmail.com  ', user1.password)).to eq(user1)     
     end
 
     it "authenticates correctly even when email is not cased correctly" do
@@ -146,7 +146,7 @@ RSpec.describe User, type: :model do
         password: '123456',
         password_confirmation: '123456'
       })
-      expect(user1.authenticate_with_credentials('fIRstlast@gmaIL.com', user1.password)).to be true    
+      expect(User.authenticate_with_credentials('fIRstlast@gmaIL.com', user1.password)).to eq(user1)  
     end
   end
 end
