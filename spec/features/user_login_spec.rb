@@ -28,7 +28,6 @@ RSpec.feature "Visitor logins with correct information", type: :feature, js: tru
 
     fill_in 'email', with: 'firstlast@gmail.com'
     fill_in 'password', with: '123456'
-    save_screenshot
     find_button('Submit').click
 
     expect(page).to have_content "Products"

@@ -22,7 +22,7 @@ RSpec.feature "Visitor adds to cart and sees the cart button in nav change", typ
     visit root_path
     
     expect(page).to have_content "My Cart (0)"
-    save_screenshot
+    # save_screenshot
 
     first("article.product").find_button('Add').click
     expect(page).to have_content "My Cart (1)"
