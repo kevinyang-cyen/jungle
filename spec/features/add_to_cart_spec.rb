@@ -17,7 +17,7 @@ RSpec.feature "Visitor adds to cart and sees the cart button in nav change", typ
     end
   end
 
-  scenario "They see all products" do
+  scenario "They click add" do
     # ACT
     visit root_path
     

@@ -16,12 +16,7 @@ class UsersController < ApplicationController
 
   private
 
-
   def user_params
-    validates :email, presence: true
-    validates :first_name, presence: true
-    validates :last_name, presence: true
-    validates :email, :uniqueness => { :case_sensitive => false }
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end
 

@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
 
   before_save {self.email = email.downcase}
 
-  def authenticate_with_credentials(email, password)
+  def self.authenticate_with_credentials(email, password)
     user = User.find_by_email(email.strip.downcase)
     if user && user.authenticate(password)
-      return true
+      return user
     else
       return false
     end
